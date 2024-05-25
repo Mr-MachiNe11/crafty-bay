@@ -1,69 +1,114 @@
+import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
-class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({super.key});
+class OtpVerificationScreen extends StatefulWidget {
+  final String email;
+
+  const OtpVerificationScreen({super.key, required this.email});
 
   @override
-  State<EmailVerificationScreen> createState() =>
-      _EmailVerificationScreenState();
+  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
-
-  final TextEditingController _emailController = TextEditingController();
+class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  final TextEditingController _otpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 160,
-            ),
-            const AppLogo(),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              'Welcome Back',
-              style: textTheme.headlineLarge,
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              'Please Enter Your Email address',
-              style: textTheme.headlineSmall,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.email_outlined),
-                prefixIconColor: Colors.grey,
-                hintText: 'Email'
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 150,
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            ElevatedButton(onPressed: () {}, child: const Text('Next')),
-          ],
+              const AppLogo(),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                'Enter OTP Code',
+                style: textTheme.headlineLarge,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                'A 4 digit OTP code has been sent',
+                style: textTheme.headlineSmall,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              _buildPinCodeField(),
+              const SizedBox(
+                height: 16,
+              ),
+              ElevatedButton(onPressed: () {}, child: const Text('Next')),
+              const SizedBox(
+                height: 24,
+              ),
+              _buildResendCodeMessage(),
+              TextButton(
+                onPressed: () {},
+                child: const Text('Resend Code'),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
+
+  Widget _buildResendCodeMessage() {
+    return RichText(
+      text: const TextSpan(
+        style: TextStyle(
+          color: Colors.grey,
+          fontWeight: FontWeight.w500,
+        ),
+        children: [
+          TextSpan(text: 'This code will expire in '),
+          TextSpan(
+              text: '100s',
+              style: TextStyle(
+                color: AppColors.primaryColor,
+              )),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPinCodeField() {
+    return PinCodeTextField(
+      animationType: AnimationType.fade,
+      keyboardType: TextInputType.number,
+      appContext: context,
+      length: 4,
+      obscureText: false,
+      pinTheme: PinTheme(
+        shape: PinCodeFieldShape.box,
+        borderRadius: BorderRadius.circular(5),
+        fieldHeight: 50,
+        fieldWidth: 50,
+        activeFillColor: Colors.white,
+        inactiveFillColor: Colors.transparent,
+        selectedFillColor: Colors.white,
+      ),
+      animationDuration: const Duration(milliseconds: 300),
+      controller: _otpController,
+    );
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
-    _emailController.dispose();
+    _otpController.dispose();
     super.dispose();
   }
 }
-
