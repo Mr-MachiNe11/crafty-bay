@@ -18,48 +18,52 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 160,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 160,
+                ),
+                const AppLogo(),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'Welcome Back',
+                  style: textTheme.headlineLarge,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  'Please Enter Your Email address',
+                  style: textTheme.headlineSmall,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.email_outlined),
+                      prefixIconColor: Colors.grey,
+                      hintText: 'Email'),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => OtpVerificationScreen(
+                          email: _emailController.text.trim()));
+                    },
+                    child: const Text('Next')),
+              ],
             ),
-            const AppLogo(),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              'Welcome Back',
-              style: textTheme.headlineLarge,
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              'Please Enter Your Email address',
-              style: textTheme.headlineSmall,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.email_outlined),
-                  prefixIconColor: Colors.grey,
-                  hintText: 'Email'),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Get.to(() => OtpVerificationScreen(
-                      email: _emailController.text.trim()));
-                },
-                child: const Text('Next')),
-          ],
+          ),
         ),
       ),
     );

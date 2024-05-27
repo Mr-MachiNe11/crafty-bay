@@ -1,6 +1,10 @@
+import 'dart:async';
+
+import 'package:crafty_bay/presentation/screens/complete_profile_screen.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -15,50 +19,81 @@ class OtpVerificationScreen extends StatefulWidget {
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController _otpController = TextEditingController();
 
+  var remainingTime = 100.obs;
+  var isResendButtonVisible = false.obs;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _startCountdownTimer();
+  }
+
+  void _startCountdownTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingTime.value > 0) {
+        remainingTime.value--;
+      } else {
+        isResendButtonVisible.value = true;
+        _timer.cancel();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 150,
-              ),
-              const AppLogo(),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                'Enter OTP Code',
-                style: textTheme.headlineLarge,
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-              Text(
-                'A 4 digit OTP code has been sent',
-                style: textTheme.headlineSmall,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              _buildPinCodeField(),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(onPressed: () {}, child: const Text('Next')),
-              const SizedBox(
-                height: 24,
-              ),
-              _buildResendCodeMessage(),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Resend Code'),
-              )
-            ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 120,
+                ),
+                const AppLogo(),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'Enter OTP Code',
+                  style: textTheme.headlineLarge,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  'A 4 digit OTP code has been sent',
+                  style: textTheme.headlineSmall,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                _buildPinCodeField(),
+                const SizedBox(
+                  height: 16,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => const CompleteProfileScreen());
+                    },
+                    child: const Text('Next')),
+                const SizedBox(
+                  height: 24,
+                ),
+                Obx(() => _buildResendCodeMessage()),
+                Obx(() => Visibility(
+                      visible: isResendButtonVisible.value,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text('Resend Code'),
+                      ),
+                    )),
+              ],
+            ),
           ),
         ),
       ),
@@ -67,16 +102,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   Widget _buildResendCodeMessage() {
     return RichText(
-      text: const TextSpan(
-        style: TextStyle(
+      text: TextSpan(
+        style: const TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.w500,
         ),
         children: [
-          TextSpan(text: 'This code will expire in '),
+          const TextSpan(text: 'This code will expire in '),
           TextSpan(
-              text: '100s',
-              style: TextStyle(
+              text: '${remainingTime.value}s',
+              style: const TextStyle(
                 color: AppColors.primaryColor,
               )),
         ],
@@ -109,6 +144,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   void dispose() {
     // TODO: implement dispose
     _otpController.dispose();
+    _timer.cancel();
     super.dispose();
   }
 }
