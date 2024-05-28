@@ -11,7 +11,14 @@ class CompleteProfileScreen extends StatefulWidget {
 }
 
 class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _shippingAddressController =
+      TextEditingController();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,62 +51,16 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 const SizedBox(
                   height: 24,
                 ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.person_outline),
-                      prefixIconColor: Colors.grey,
-                      hintText: 'First Name '),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.person),
-                      prefixIconColor: Colors.grey,
-                      hintText: 'Last Name '),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.phone_android),
-                      prefixIconColor: Colors.grey,
-                      hintText: 'Mobile'),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.location_city),
-                      prefixIconColor: Colors.grey,
-                      hintText: 'City'),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.home),
-                      prefixIconColor: Colors.grey,
-                      hintText: 'Shipping Address'),
-                ),
+                _buildCompleteProfileForm(),
                 const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => OtpVerificationScreen(
-                          email: _emailController.text.trim()));
-                    },
-                    child: const Text('Complete')),
+                  onPressed: () {
+                    // Handle the completion action here
+                  },
+                  child: const Text('Complete'),
+                ),
               ],
             ),
           ),
@@ -108,10 +69,66 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     );
   }
 
+  Widget _buildCompleteProfileForm() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _firstNameController,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.person_outline),
+              hintText: 'First Name',
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextFormField(
+            controller: _lastNameController,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.person),
+              hintText: 'Last Name',
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextFormField(
+            controller: _mobileController,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.phone_android),
+              hintText: 'Mobile',
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextFormField(
+            controller: _cityController,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.location_city),
+              hintText: 'City',
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextFormField(
+            maxLines: 3,
+            controller: _shippingAddressController,
+            decoration: const InputDecoration(
+              prefixIcon: Padding(
+                padding: EdgeInsets.only(bottom: 45),
+                child: Icon(Icons.home),
+              ),
+              hintText: 'Shipping Address',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void dispose() {
-    // TODO: implement dispose
-    _emailController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _mobileController.dispose();
+    _cityController.dispose();
+    _shippingAddressController.dispose();
     super.dispose();
   }
 }

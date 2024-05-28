@@ -45,10 +45,11 @@ class CraftyBay extends StatelessWidget {
       );
 
   InputDecorationTheme _inputDecorationTheme() => InputDecorationTheme(
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.w400,
         ),
+        prefixIconColor: Colors.grey,
         border: _outlineInputBorder,
         enabledBorder: _outlineInputBorder,
         focusedBorder: _outlineInputBorder,

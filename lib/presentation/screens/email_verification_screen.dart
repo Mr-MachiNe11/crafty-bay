@@ -49,7 +49,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   controller: _emailController,
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.email_outlined),
-                      prefixIconColor: Colors.grey,
                       hintText: 'Email'),
                 ),
                 const SizedBox(
