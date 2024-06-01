@@ -1,7 +1,9 @@
-
 import 'package:crafty_bay/presentation/utility/assets_path.dart';
 import 'package:crafty_bay/presentation/widgets/app_bar_icon_button.dart';
+import 'package:crafty_bay/presentation/widgets/category_item.dart';
 import 'package:crafty_bay/presentation/widgets/home_carousel_slider.dart';
+import 'package:crafty_bay/presentation/widgets/product_card.dart';
+import 'package:crafty_bay/presentation/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -30,12 +32,84 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const HomeCarouselSlider(),
               const SizedBox(
-                height: 16,
+                height: 8,
               ),
+              SectionHeader(
+                title: 'All Category',
+                onTapSeeAll: () {},
+              ),
+              _buildCategoryListView(),
+              const SizedBox(
+                height: 8,
+              ),
+              SectionHeader(
+                title: 'Popular Products',
+                onTapSeeAll: () {},
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              _buildProductListView(),
+              const SizedBox(
+                height: 8,
+              ),
+              SectionHeader(
+                title: 'Special',
+                onTapSeeAll: () {},
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              _buildProductListView(),
+              const SizedBox(
+                height: 8,
+              ),
+              SectionHeader(
+                title: 'New',
+                onTapSeeAll: () {},
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              _buildProductListView(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  SizedBox _buildCategoryListView() {
+    return SizedBox(
+      height: 120,
+      child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return const CategoryItem();
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(
+              width: 16,
+            );
+          },
+          itemCount: 8),
+    );
+  }
+
+  SizedBox _buildProductListView() {
+    return SizedBox(
+      height: 210,
+      child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return const ProductCard();
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(
+              width: 16,
+            );
+          },
+          itemCount: 8),
     );
   }
 
@@ -86,5 +160,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _searchController.dispose();
+    super.dispose();
   }
 }

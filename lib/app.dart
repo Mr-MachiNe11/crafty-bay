@@ -1,3 +1,4 @@
+import 'package:crafty_bay/controller_binder.dart';
 import 'package:crafty_bay/presentation/screens/splash_screen.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,15 @@ class CraftyBay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      home: const SplashScreen(),
+      initialBinding: ControllerBinder(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: AppColors.primaryColor
+          )
+        ),
         colorSchemeSeed: AppColors.primaryColor,
         progressIndicatorTheme:
             const ProgressIndicatorThemeData(color: AppColors.primaryColor),
@@ -31,7 +39,6 @@ class CraftyBay extends StatelessWidget {
           ),
         ),
       ),
-      home: const SplashScreen(),
     );
   }
 

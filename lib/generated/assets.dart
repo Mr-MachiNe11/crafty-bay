@@ -4,5 +4,11 @@ class Assets {
 
   static const String imagesLogo = 'assets/images/logo.svg';
   static const String imagesLogoNav = 'assets/images/logo_nav.svg';
+  static const String imagesShoe = 'assets/images/shoe.png';
+  static const String imagesShoe1 = 'assets/images/shoe1.png';
+  static const String imagesShoes = 'assets/images/shoes.svg';
+  static const String imagesShoes1 = 'assets/images/shoes1.svg';
+  static const String imagesShoesLogo = 'assets/images/shoes_logo.svg';
+  static const String imagesTrainers = 'assets/images/Trainers.jpeg';
 
 }
