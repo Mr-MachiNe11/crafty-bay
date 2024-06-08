@@ -1,16 +1,16 @@
 import 'package:crafty_bay/presentation/state_holders/main_bottom_nav_bar_controller.dart';
-import 'package:crafty_bay/presentation/widgets/category_item.dart';
+import 'package:crafty_bay/presentation/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CategoryListScreen extends StatefulWidget {
-  const CategoryListScreen({super.key});
+class WishListScreen extends StatefulWidget {
+  const WishListScreen({super.key});
 
   @override
-  State<CategoryListScreen> createState() => _CategoryListScreenState();
+  State<WishListScreen> createState() => _WishListScreenState();
 }
 
-class _CategoryListScreenState extends State<CategoryListScreen> {
+class _WishListScreenState extends State<WishListScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -20,22 +20,21 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Category List'),
+          title: const Text('WishList'),
           leading: IconButton(
               onPressed: () {
                 Get.find<MainBottomNavBarController>().backToHome();
               },
               icon: const Icon(Icons.arrow_back_ios_sharp)),
-
         ),
         body: GridView.builder(
           itemCount: 25,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4, childAspectRatio: 0.72),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, childAspectRatio: 0.8),
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FittedBox(child: CategoryItem()),
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: FittedBox(child: ProductCard(isWishlist: true)),
             );
           },
         ),

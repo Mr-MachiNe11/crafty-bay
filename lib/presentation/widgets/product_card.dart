@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
+    this.isWishlist = false,
   });
+
+  final bool isWishlist;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      surfaceTintColor: Colors.white,
       elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -43,7 +47,6 @@ class ProductCard extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildProductDetails() {
     return Padding(
@@ -114,10 +117,10 @@ class ProductCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
-      child: const Padding(
-        padding: EdgeInsets.all(2.0),
+      child:  Padding(
+        padding: const EdgeInsets.all(2.0),
         child: Icon(
-          Icons.favorite_outline,
+          isWishlist ? Icons.delete_outline : Icons.favorite_outline,
           color: Colors.white,
           size: 16,
         ),
@@ -125,5 +128,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
-
