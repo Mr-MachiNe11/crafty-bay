@@ -1,5 +1,6 @@
 import 'package:crafty_bay/presentation/state_holders/main_bottom_nav_bar_controller.dart';
-import 'package:crafty_bay/presentation/utility/assets_path.dart';
+import 'package:crafty_bay/presentation/utility/app_colors.dart';
+import 'package:crafty_bay/presentation/widgets/cart_product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,46 +30,61 @@ class _CartListScreenState extends State<CartListScreen> {
         ),
         body: Column(
           children: [
-            Card(
-              child: Row(
-                children: [
-                  Image.asset(
-                    AssetsPath.shoePng,
-                    width: 100,
-                  ),
-                  Expanded(
-                      child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Text('Nike Shoe 2123K2'),
-                                Wrap(
-                                  spacing: 16,
-                                  children: [
-                                    Text('Color: Red'),
-                                    Text('Size: XL'),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.delete_outline_sharp))
-                        ],
-                      ),
-                      Row(),
-                    ],
-                  ))
-                ],
-              ),
-            ),
+            Expanded(
+                child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return const CartProductItem();
+              },
+            )),
+            _buildCheckoutSection(),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildCheckoutSection() {
+    return Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+                color: AppColors.primaryColor.withOpacity(0.1),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(16),
+                )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildTotalPriceSection(),
+                SizedBox(
+                  width: 100,
+                  child: ElevatedButton(
+                      onPressed: () {}, child: const Text('Checkout')),
+                ),
+              ],
+            ),
+          );
+  }
+
+  Widget _buildTotalPriceSection() {
+    return const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Total Price',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                  ),
+                  Text(
+                    '\$200',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: AppColors.primaryColor),
+                  ),
+                ],
+              );
   }
 }
