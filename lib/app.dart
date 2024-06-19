@@ -7,9 +7,12 @@ import 'package:get/get.dart';
 class CraftyBay extends StatelessWidget {
   const CraftyBay({super.key});
 
+  static GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: CraftyBay.navigationKey,
       home: const SplashScreen(),
       initialBinding: ControllerBinder(),
       debugShowCheckedModeBanner: false,
