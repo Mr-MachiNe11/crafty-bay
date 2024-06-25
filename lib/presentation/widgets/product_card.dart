@@ -1,31 +1,39 @@
+import 'package:crafty_bay/presentation/screens/product_details_screen.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/utility/assets_path.dart';
+import 'package:crafty_bay/presentation/widgets/wish_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
-    this.isWishlist = false,
+    this.showAddToWishlist = true,
   });
 
-  final bool isWishlist;
+  final bool showAddToWishlist;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      surfaceTintColor: Colors.white,
-      elevation: 3,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      color: Colors.white,
-      child: SizedBox(
-        width: 150,
-        child: Column(
-          children: [
-            _buildProductImageContainer(),
-            _buildProductDetails(),
-          ],
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => const ProductDetailsScreen());
+      },
+      child: Card(
+        surfaceTintColor: Colors.white,
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        color: Colors.white,
+        child: SizedBox(
+          width: 150,
+          child: Column(
+            children: [
+              _buildProductImageContainer(),
+              _buildProductDetails(),
+            ],
+          ),
         ),
       ),
     );
@@ -82,7 +90,7 @@ class ProductCard extends StatelessWidget {
       children: [
         _buildProductPrice(),
         _buildProductRating(),
-        _buildFavoriteIcon(),
+        WishButton(showAddToWishlist: showAddToWishlist)
       ],
     );
   }
@@ -110,21 +118,5 @@ class ProductCard extends StatelessWidget {
       ],
     );
   }
-
-  Widget _buildFavoriteIcon() {
-    return Card(
-      color: AppColors.primaryColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child:  Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: Icon(
-          isWishlist ? Icons.delete_outline : Icons.favorite_outline,
-          color: Colors.white,
-          size: 16,
-        ),
-      ),
-    );
-  }
+  
 }

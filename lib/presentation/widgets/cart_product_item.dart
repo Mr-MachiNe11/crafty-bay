@@ -102,18 +102,22 @@ class _CartProductItemState extends State<CartProductItem> {
               fontWeight: FontWeight.w600,
               fontSize: 16),
         ),
-        ItemCount(
-          initialValue: _counterValue,
-          minValue: 1,
-          maxValue: 20,
-          color: AppColors.primaryColor,
-          onChanged: (value) {
-            _counterValue = value as int;
-            setState(() {});
-          },
-          decimalPlaces: 0,
-        )
+        _buildCounter(),
       ],
+    );
+  }
+  
+  Widget _buildCounter(){
+    return ItemCount(
+      initialValue: _counterValue,
+      minValue: 1,
+      maxValue: 20,
+      color: AppColors.primaryColor,
+      onChanged: (value) {
+        _counterValue = value as int;
+        setState(() {});
+      },
+      decimalPlaces: 0,
     );
   }
 }

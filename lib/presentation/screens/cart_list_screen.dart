@@ -78,7 +78,7 @@ class _CartListScreenState extends State<CartListScreen> {
                         color: Colors.grey),
                   ),
                   Text(
-                    '\$200',
+                    '\$1200',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
