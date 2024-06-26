@@ -1,3 +1,4 @@
+import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SizePicker extends StatefulWidget {
@@ -16,12 +17,12 @@ class _SizePickerState extends State<SizePicker> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 30,
+      height: 40,
       child: ListView.builder(
         primary: false,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        itemCount: widget.colors.length,
+        itemCount: widget.sizes.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
@@ -30,13 +31,36 @@ class _SizePickerState extends State<SizePicker> {
               });
               widget.onChange(widget.sizes[index]);
             },
-            child: CircleAvatar(
-              backgroundColor: widget.colors[index],
-              child: selectedIndex == index ? const Icon(Icons.check,color: Colors.white,) : null,
+            child: Container(
+              height: 40,
+              width: 40,
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(right: 8),
+              decoration: BoxDecoration(
+                  color: _getSelectedBackgroundColor(index == selectedIndex),
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                      color: _getSelectedTextColor(index == selectedIndex))),
+              child: FittedBox(
+                child: Text(
+                  widget.sizes[index],
+                  style: TextStyle(
+                    color: _getSelectedTextColor(index == selectedIndex),
+                  ),
+                ),
+              ),
             ),
           );
         },
       ),
     );
+  }
+
+  Color _getSelectedTextColor(bool isSelected) {
+    return isSelected ? Colors.white : Colors.black;
+  }
+
+  Color _getSelectedBackgroundColor(bool isSelected) {
+    return isSelected ? AppColors.primaryColor : Colors.transparent;
   }
 }
