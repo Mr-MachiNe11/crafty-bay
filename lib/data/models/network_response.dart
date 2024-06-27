@@ -1,6 +1,6 @@
 class NetworkResponse {
   final int? responseCode;
-  final String? errorMessage;
+  final String errorMessage;
   final dynamic responseData;
   final bool isSuccess;
 
