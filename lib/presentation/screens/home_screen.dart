@@ -1,4 +1,7 @@
+import 'package:crafty_bay/data/models/category.dart';
+import 'package:crafty_bay/presentation/state_holders/category_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/home_slider_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/main_bottom_nav_bar_controller.dart';
 import 'package:crafty_bay/presentation/utility/assets_path.dart';
 import 'package:crafty_bay/presentation/widgets/app_bar_icon_button.dart';
 import 'package:crafty_bay/presentation/widgets/category_item.dart';
@@ -48,9 +51,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SectionHeader(
                 title: 'All Category',
-                onTapSeeAll: () {},
+                onTapSeeAll: () {
+                  Get.find<MainBottomNavBarController>().selectCategory();
+                },
               ),
-              _buildCategoryListView(),
+              GetBuilder<CategoryListController>(
+                  builder: (categoryListController) {
+                if (categoryListController.inProgress) {
+                  return SizedBox(
+                    height: 120,
+                    child: CenteredCircularProgressIndicator(),
+                  );
+                }
+                return _buildCategoryListView(
+                    categoryListController.categoryList);
+              }),
               const SizedBox(
                 height: 8,
               ),
@@ -91,20 +106,23 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  SizedBox _buildCategoryListView() {
+  Widget _buildCategoryListView(List<Category> categoryList) {
     return SizedBox(
       height: 120,
       child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return const CategoryItem();
-          },
-          separatorBuilder: (context, index) {
-            return const SizedBox(
-              width: 16,
-            );
-          },
-          itemCount: 8),
+        scrollDirection: Axis.horizontal,
+        itemCount: categoryList.length,
+        itemBuilder: (context, index) {
+          return  CategoryItem(
+            category: categoryList[index],
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            width: 16,
+          );
+        },
+      ),
     );
   }
 

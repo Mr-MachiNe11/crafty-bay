@@ -24,11 +24,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Details'),
-        leading: IconButton(
+        /*leading: IconButton(
             onPressed: () {
               Get.find<MainBottomNavBarController>().backToHome();
             },
-            icon: const Icon(Icons.arrow_back_ios_sharp)),
+            icon: const Icon(Icons.arrow_back_ios_sharp)),*/
       ),
       body: Column(
         children: [
