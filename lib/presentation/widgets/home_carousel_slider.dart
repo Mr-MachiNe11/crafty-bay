@@ -1,11 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:crafty_bay/data/models/slider_data.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
+import 'package:crafty_bay/presentation/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeCarouselSlider extends StatefulWidget {
   const HomeCarouselSlider({
-    super.key, required this.sliderList,
+    super.key,
+    required this.sliderList,
   });
 
   final List<SliderData> sliderList;
@@ -40,21 +42,37 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
           _selectedPageIndex.value = index;
         },
       ),
-      items: widget.sliderList.map((i) {
+      items: widget.sliderList.map((slider) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  'text $i',
-                  style: const TextStyle(fontSize: 16.0),
-                ));
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              alignment: Alignment.center,
+              child: Stack(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: NetworkImageWidget(
+                        url: slider.image ?? '',
+                        height: double.maxFinite,
+                        width: double.maxFinite,
+                        boxFit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: _buildProductDescription(slider),
+                  ),
+                ],
+              ),
+            );
           },
         );
       }).toList(),
@@ -86,6 +104,41 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
         );
       },
       valueListenable: _selectedPageIndex,
+    );
+  }
+
+  Widget _buildProductDescription(SliderData slider) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            slider.title ?? '',
+            style: const TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+          ),
+          Text(
+            slider.shortDes ?? '',
+            maxLines: 2,
+            style:
+                const TextStyle(color: Colors.white, overflow: TextOverflow.ellipsis),
+          ),
+          SizedBox(
+            width: 100,
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    textStyle:
+                        const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    backgroundColor: Colors.white,
+                    foregroundColor: AppColors.primaryColor),
+                onPressed: () {},
+                child: const Text('Buy now')),
+          )
+        ],
+      ),
     );
   }
 }

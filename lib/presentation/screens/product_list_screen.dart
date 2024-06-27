@@ -2,9 +2,10 @@ import 'package:crafty_bay/presentation/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 
 class ProductListScreen extends StatefulWidget {
-  const ProductListScreen({super.key, required this.categoryName});
+  const ProductListScreen({super.key, required this.categoryName, required this.categoryId});
   
   final String categoryName;
+  final String categoryId;
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();

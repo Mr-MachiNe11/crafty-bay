@@ -1,3 +1,5 @@
+import 'package:crafty_bay/data/models/category.dart';
+import 'package:crafty_bay/data/models/category_list_model.dart';
 import 'package:crafty_bay/data/models/network_response.dart';
 import 'package:crafty_bay/data/models/slider_data.dart';
 import 'package:crafty_bay/data/models/slider_list_model.dart';
@@ -5,28 +7,28 @@ import 'package:crafty_bay/data/network_caller/network_caller.dart';
 import 'package:crafty_bay/data/utility/urls.dart';
 import 'package:get/get.dart';
 
-class HomeSliderController extends GetxController {
+class CategoryListController extends GetxController {
   bool _inProgress = false;
   String _errorMessage = '';
 
-  List<SliderData> _sliderList = [];
+  List<Category> _categoryList = [];
 
   bool get inProgress => _inProgress;
 
-  List<SliderData> get sliderList => _sliderList;
+  List<Category> get categoryList => _categoryList;
 
   String get errorMessage => _errorMessage;
 
-  Future<bool> getSliders() async {
+  Future<bool> getCategoryList() async {
     bool isSuccess = false;
     _inProgress = true;
     update();
     final NetworkResponse response =
-    await NetworkCaller.getRequest(url: Urls.homeSlider);
+    await NetworkCaller.getRequest(url: Urls.categoryList);
     if (response.isSuccess) {
       try {
-        _sliderList =
-            SliderListModel.fromJson(response.responseData).sliderList ?? [];
+        _categoryList =
+            CategoryListModel.fromJson(response.responseData).categoryList ?? [];
         isSuccess = true;
       } catch (e) {
         _errorMessage = 'Failed to parse sliders';

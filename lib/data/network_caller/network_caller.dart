@@ -18,46 +18,29 @@ class NetworkCaller {
       if (response.statusCode == 200) {
         final decodedData = jsonDecode(response.body);
         return NetworkResponse(
-            responseCode: response.statusCode, isSuccess: true);
+          responseCode: response.statusCode,
+          isSuccess: true,
+          responseData: decodedData,
+        );
       } else if (response.statusCode == 401) {
         _gotoSignInScreen();
         return NetworkResponse(
-            responseCode: response.statusCode, isSuccess: false);
+          responseCode: response.statusCode,
+          isSuccess: false,
+        );
       } else {
         return NetworkResponse(
-            responseCode: response.statusCode, isSuccess: true);
+          responseCode: response.statusCode,
+          isSuccess: false,
+          errorMessage: 'Failed with status code: ${response.statusCode}',
+        );
       }
     } catch (e) {
       return NetworkResponse(
-          responseCode: -1, isSuccess: true, errorMessage: e.toString());
-    }
-  }
-
-  static Future<NetworkResponse> postRequest(
-      {required String url, Map<String, dynamic>? body}) async {
-    try {
-      log(url);
-      final Response response = await post(Uri.parse(url), body: body,headers: {
-        'accept': 'application/json'
-      },);
-      log(response.statusCode.toString());
-      log(response.body.toString());
-      if (response.statusCode == 200) {
-        final decodedData = jsonDecode(response.body);
-        return NetworkResponse(
-            responseCode: response.statusCode, isSuccess: true);
-      } else if (response.statusCode == 401) {
-        _gotoSignInScreen();
-        return NetworkResponse(
-            responseCode: response.statusCode, isSuccess: false);
-      } else {
-        return NetworkResponse(
-            responseCode: response.statusCode, isSuccess: true);
-      }
-    } catch (e) {
-      log(e.toString());
-      return NetworkResponse(
-          responseCode: -1, isSuccess: true, errorMessage: e.toString());
+        responseCode: -1,
+        isSuccess: false,
+        errorMessage: e.toString(),
+      );
     }
   }
 

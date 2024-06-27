@@ -16,4 +16,8 @@ class MainBottomNavBarController extends GetxController{
     changeIndex(0);
   }
 
+  void selectCategory(){
+    changeIndex(1);
+  }
+
 }
