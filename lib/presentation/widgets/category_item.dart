@@ -18,7 +18,7 @@ class CategoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.to(
-            () => ProductListScreen(categoryName: category.categoryName ?? ''));
+            () => ProductListScreen(categoryName: category.categoryName ?? '', categoryId: '',));
       },
       child: Column(
         children: [
