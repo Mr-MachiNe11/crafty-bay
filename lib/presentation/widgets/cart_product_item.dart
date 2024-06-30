@@ -1,5 +1,6 @@
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/utility/assets_path.dart';
+import 'package:crafty_bay/presentation/widgets/item_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
@@ -92,32 +93,19 @@ class _CartProductItemState extends State<CartProductItem> {
   }
 
   Widget _buildPriceAndCounter() {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
+        Text(
           '\$100',
           style: TextStyle(
               color: AppColors.primaryColor,
               fontWeight: FontWeight.w600,
               fontSize: 16),
         ),
-        _buildCounter(),
+        ItemCounter(),
       ],
     );
   }
-  
-  Widget _buildCounter(){
-    return ItemCount(
-      initialValue: _counterValue,
-      minValue: 1,
-      maxValue: 20,
-      color: AppColors.primaryColor,
-      onChanged: (value) {
-        _counterValue = value as int;
-        setState(() {});
-      },
-      decimalPlaces: 0,
-    );
-  }
+
 }

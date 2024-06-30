@@ -1,13 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProductImageCarouselSlider extends StatefulWidget {
   const ProductImageCarouselSlider({
     super.key,
+    required this.images,
   });
+
+  final List<String> images;
 
   @override
   State<ProductImageCarouselSlider> createState() =>
@@ -29,8 +30,8 @@ class _ProductImageCarouselSliderState
               bottom: 8,
               left: 0,
               right: 0,
-              child: _buildDotIndicator(),)
-
+              child: _buildDotIndicator(),
+            )
           ],
         ),
       ],
@@ -47,17 +48,18 @@ class _ProductImageCarouselSliderState
           _selectedPageIndex.value = index;
         },
       ),
-      items: [1, 2, 3, 4, 5].map((i) {
+      items: widget.images.map((image) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.grey,
-                alignment: Alignment.center,
-                child: Text(
-                  'text $i',
-                  style: const TextStyle(fontSize: 16.0),
-                ));
+              width: MediaQuery.of(context).size.width,
+              color: Colors.grey,
+              alignment: Alignment.center,
+              child: Image.network(
+                image,
+                fit: BoxFit.cover,
+              ),
+            );
           },
         );
       }).toList(),
@@ -70,13 +72,14 @@ class _ProductImageCarouselSliderState
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < widget.images.length; i++)
               Container(
                 width: 12,
                 height: 12,
                 margin: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: i == currentPage ? AppColors.primaryColor : Colors.white,
+                  color:
+                      i == currentPage ? AppColors.primaryColor : Colors.white,
                   border: Border.all(
                       color: i == currentPage
                           ? AppColors.primaryColor
